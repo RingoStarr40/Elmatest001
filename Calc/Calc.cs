@@ -45,4 +45,48 @@ namespace Calcspace
             return (int)args[0] + (int)args[1];
         }
     }
+
+    public class SubOperation : IOperation
+    {
+        public string Name { get { return "Sub"; } }
+
+        public object Execute(object[] args)
+        {
+            return (int)args[0] - (int)args[1];
+        }
+    }
+
+    public class MultOperation : IOperation
+    {
+        public string Name { get { return "Mult"; } }
+
+        public object Execute(object[] args)
+        {
+            return (int)args[0] * (int)args[1];
+        }
+    }
+
+    public class FactOperation : IOperation
+    {
+        public string Name { get { return "Fact"; } }
+
+        public object Execute(object[] args)
+        {
+            int result = 1;
+            for (int i = 1; i <= (int)args[0]; i++)
+            {
+                result *= i;
+            }
+            return result;
+        }
+    }
+
+    public class PiOperation : IOperation
+    {
+        public string Name { get { return "Pi"; } }
+        public object Execute(object[] args)
+        {
+            return (float)Math.PI;
+        } 
+    }
 }
