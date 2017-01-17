@@ -13,20 +13,25 @@ namespace Calcspace
             return (int)Execute("Sum", new object[] { x, y }); //
         }
 
+        public Calc(IEnumerable<IOperation> opers) //позволяет создавать множество видов списков 
+        {
+            operations = opers; //задавание операции
+
+        }
+
         public Calc(IOperation[] opers)
         {
             operations = opers; //задавание операции
         }
 
-        public Calc()
-        {
-        }
-
-        private IOperation[] operations { get; set; } //массив всех операций, которые может делать калькулятор
+        
+        private IEnumerable<IOperation> operations { get; set; } //массив всех операций, которые может делать калькулятор
 
         public object Execute(string name, object[] args) //имя и параметры операции
         {
             var oper = operations.FirstOrDefault(o => o.Name == name); //ищем операцию
+            if (oper == null)
+                return $"Operation \"{name}\" not found";
             return oper.Execute(args); //нашли - мы ее вызываем
         }
     }
@@ -42,7 +47,9 @@ namespace Calcspace
         public string Name { get { return "Sum"; } } //get - другой класс запрашивает значение. set - задавание операции
         public object Execute(object[] args)
         {
-            return (int)args[0] + (int)args[1];
+            var x = Convert.ToInt32(args[0]);
+            var y = Convert.ToInt32(args[1]);
+            return x + y;
         }
     }
 
@@ -52,7 +59,7 @@ namespace Calcspace
 
         public object Execute(object[] args)
         {
-            return (int)args[0] - (int)args[1];
+            return Convert.ToInt32(args[0]) - Convert.ToInt32(args[1]);
         }
     }
 
