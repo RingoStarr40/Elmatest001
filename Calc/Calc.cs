@@ -8,11 +8,6 @@ namespace Calcspace
 {
     public class Calc
     {
-        public int Sum(int x, int y)
-        {
-            return (int)Execute("Sum", new object[] { x, y }); //
-        }
-
         public Calc(IEnumerable<IOperation> opers) //позволяет создавать множество видов списков 
         {
             operations = opers; //задавание операции
@@ -29,10 +24,16 @@ namespace Calcspace
 
         public object Execute(string name, object[] args) //имя и параметры операции
         {
+            name = name.ToLower();
             var oper = operations.FirstOrDefault(o => o.Name == name); //ищем операцию
             if (oper == null)
                 return $"Operation \"{name}\" not found";
             return oper.Execute(args); //нашли - мы ее вызываем
+        }
+
+        public IEnumerable<string> GetOperationNames()
+        {
+            return operations.Select(o => o.Name); //у каждой операции берем только имя
         }
     }
 
@@ -44,7 +45,7 @@ namespace Calcspace
 
     public class SumOperation : IOperation //здесь написаное - что SumOperation - реализация IOperation
     {
-        public string Name { get { return "Sum"; } } //get - другой класс запрашивает значение. set - задавание операции
+        public string Name { get { return "sum"; } } //get - другой класс запрашивает значение. set - задавание операции
         public object Execute(object[] args)
         {
             var x = Convert.ToInt32(args[0]);
@@ -55,7 +56,7 @@ namespace Calcspace
 
     public class SubOperation : IOperation
     {
-        public string Name { get { return "Sub"; } }
+        public string Name { get { return "sub"; } }
 
         public object Execute(object[] args)
         {
@@ -65,7 +66,7 @@ namespace Calcspace
 
     public class MultOperation : IOperation
     {
-        public string Name { get { return "Mult"; } }
+        public string Name { get { return "mult"; } }
 
         public object Execute(object[] args)
         {
@@ -75,7 +76,7 @@ namespace Calcspace
 
     public class FactOperation : IOperation
     {
-        public string Name { get { return "Fact"; } }
+        public string Name { get { return "fact"; } }
 
         public object Execute(object[] args)
         {
@@ -90,7 +91,7 @@ namespace Calcspace
 
     public class PiOperation : IOperation
     {
-        public string Name { get { return "Pi"; } }
+        public string Name { get { return "pi"; } }
         public object Execute(object[] args)
         {
             return (float)Math.PI;
