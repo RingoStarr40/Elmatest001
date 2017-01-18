@@ -20,7 +20,7 @@ namespace AnyOperations
 
     public class Fact : IOperation
     {
-        public string Name { get { return "Fact"; } }
+        public string Name { get { return "fact"; } }
 
         public object Execute(object[] args)
         {
@@ -30,6 +30,15 @@ namespace AnyOperations
                 result *= i;
             }
             return result;
+        }
+    }
+
+    public class PiOperation : IOperation
+    {
+        public string Name { get { return "pi"; } }
+        public object Execute(object[] args)
+        {
+            return (float)Math.PI;
         }
     }
 }
