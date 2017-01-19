@@ -25,9 +25,20 @@ namespace Calcspace
         public object Execute(string name, object[] args) //имя и параметры операции
         {
             name = name.ToLower();
-            var oper = operations.FirstOrDefault(o => o.Name == name); //ищем операцию
-            if (oper == null)
+            var opers = operations.Where(o => o.Name == name); //ищем операцию
+            if (!opers.Any())
                 return $"Operation \"{name}\" not found";
+
+            var opersWithCount = opers.OfType<IOperationCount>();
+
+            var oper = opersWithCount.FirstOrDefault(o => o.Count == args.Count()) ?? opers.FirstOrDefault();
+
+
+            if (oper == null)
+            {
+                return $"Operation \"{name}\" not found";
+            }
+
             return oper.Execute(args); //нашли - мы ее вызываем
         }
 
@@ -43,58 +54,21 @@ namespace Calcspace
         object Execute(object[] args); //результат и входные данные
     }
 
-    public class SumOperation : IOperation //здесь написаное - что SumOperation - реализация IOperation
+    public interface IOperationCount : IOperation
     {
-        public string Name { get { return "sum"; } } //get - другой класс запрашивает значение. set - задавание операции
-        public object Execute(object[] args)
-        {
-            var x = Convert.ToInt32(args[0]);
-            var y = Convert.ToInt32(args[1]);
-            return x + y;
-        }
+        //Количество аргументов в операции
+        int Count { get; }
     }
 
-    public class SubOperation : IOperation
+   
+    public class DivOperation : IOperation
     {
+        public int Count { get { return 1; } }
         public string Name { get { return "sub"; } }
 
         public object Execute(object[] args)
         {
             return Convert.ToInt32(args[0]) - Convert.ToInt32(args[1]);
         }
-    }
-
-    public class MultOperation : IOperation
-    {
-        public string Name { get { return "mult"; } }
-
-        public object Execute(object[] args)
-        {
-            return (int)args[0] * (int)args[1];
-        }
-    }
-
-    public class FactOperation : IOperation
-    {
-        public string Name { get { return "fact"; } }
-
-        public object Execute(object[] args)
-        {
-            int result = 1;
-            for (int i = 1; i <= (int)args[0]; i++)
-            {
-                result *= i;
-            }
-            return result;
-        }
-    }
-
-    public class PiOperation : IOperation
-    {
-        public string Name { get { return "pi"; } }
-        public object Execute(object[] args)
-        {
-            return (float)Math.PI;
-        } 
     }
 }
