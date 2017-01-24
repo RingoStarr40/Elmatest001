@@ -11,6 +11,8 @@ using System.Web.Hosting;
 using Calc;
 using Services;
 using System.Diagnostics;
+using DomainModel.Helpers;
+using Models;
 
 namespace Web.Controllers
 {
@@ -48,10 +50,28 @@ namespace Web.Controllers
             operResult.Operation = repository.FindOperByName(model.Name); //реализовать;
             operResult.Result = result.ToString();
             operResult.ExecTimeMs = stopWatch.ElapsedMilliseconds;
+            repository.Update(operResult);
 
-            repository.Update(operResult); 
+            using (var session = NHibernateHelper.OpenSession()) //Это надо реализовать в репозитории, это способы получения данных
+            {
+                operResult.Author = session.Get<UserTable>(1);
 
-            ViewData.Model = $"result = {result}";
+                /*session.Load<UserTable>(1);
+
+                var sql = session.CreateSQLQuery("select * from UserTable where ID = ?");
+                sql.SetParameter(0, 1);
+                sql.UniqueResult<UserTable>();
+
+                //session.CreateCriteria
+
+                session.QueryOver<UserTable>()
+                    .And(x => x.Id == 1)
+                    .List<UserTable>()
+                    .FirstOrDefault();*/
+            }
+
+
+                ViewData.Model = $"result = {result}";
             return View();
         }
 

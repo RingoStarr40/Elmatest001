@@ -1,0 +1,29 @@
+﻿@model Models.OperationResult
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.Operation.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.ArgumentCount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.Arguments)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.Result)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.ExecTimeMs)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.Author.FullName)
+    </td>
+
+</tr>
+
+
+
+
+

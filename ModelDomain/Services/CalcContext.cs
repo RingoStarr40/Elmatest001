@@ -17,6 +17,9 @@ namespace Services
 
         public DbSet<OperationResult> OperationResult { get; set; } //связывает нашу таблицу с классом
 
-        public DbSet<Operation> Operations { get; set; } //связывает нашу таблицу с классом
+        public DbSet<Operation> Operations { get; set; }
+
+        public DbSet<UserTable> UserTable { get; set; }
+        //связывает нашу таблицу с классом
     }
 }

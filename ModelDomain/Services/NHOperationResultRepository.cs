@@ -71,6 +71,8 @@ namespace Services
             }
 
             return operations;
+
+            
         }
 
         public Operation FindOperByName(string name)
@@ -81,9 +83,8 @@ namespace Services
                 criteria.Add(Restrictions.Eq("Name", name));
                 criteria.SetMaxResults(1);
                 return criteria.List<Operation>().FirstOrDefault();
-            }
-
-           
+            }         
         }
+
     }
 }

@@ -10,10 +10,7 @@ namespace Models
     public class OperationResult
     {
         [Key]
-        public virtual int Id { get; set; }
-
-
-       
+        public virtual int Id { get; set; }       
 
         public virtual int ArgumentCount { get; set; }
 
@@ -27,6 +24,9 @@ namespace Models
 
         public virtual int OperationID { get; set; }
 
+        public virtual int UserID { get; set; }
         public virtual Operation Operation { get; set; }
+
+        public virtual UserTable Author { get; set; }
     }
 }

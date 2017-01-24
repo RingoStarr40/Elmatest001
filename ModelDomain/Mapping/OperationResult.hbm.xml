@@ -12,8 +12,8 @@
     <property name="Result" />
     <property name="ExecTimeMs" />
 
-
-    <many-to-one name="Operation" class="Operation" column="OperationID" lazy="false" cascade = "save-update"/> 
+    <many-to-one name="Operation" class="Operation" column="OperationID" lazy="false" cascade = "save-update"/>
+    <many-to-one name="Author" class="UserTable" column="UserID" lazy="false" cascade = "save-update"/>
 
   </class>
 

@@ -10,6 +10,7 @@ namespace Services
     public interface IOperationResultRepository : IEntityRepository<OperationResult>
     {
         Operation FindOperByName(string name);
+       
     }
 
 }
